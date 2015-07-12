@@ -14,7 +14,7 @@
     "tape": "*"
   },
   "scripts": {
-    "test": "tape test/test-get.js"
+    "test": "tape test/test-*.js"
   },
   "repository": {
     "type": "git",
