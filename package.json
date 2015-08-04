@@ -1,13 +1,13 @@
 {
   "name": "pub-src-dropbox",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Dropbox source for pub-server and pub-generator",
   "main": "pub-src-dropbox.js",
   "dependencies": {
     "debug": "^2.1.3",
     "mime-types": "^2.1.2",
-    "pub-src-fs": "^1.3.1",
-    "pub-util": "^1.4.0",
+    "pub-src-fs": "^1.3.2",
+    "pub-util": "^1.5.0",
     "superagent": "^1.2.0"
   },
   "devDependencies": {
