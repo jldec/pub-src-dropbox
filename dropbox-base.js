@@ -94,7 +94,7 @@ module.exports = function dropboxBase(opts) {
   // matches fs.readfile()
   function readfile(fullpath, options, cb) {
     if (2 === arguments.length) { cb = options; }
-    gettext(self.apiContent + 'files/auto' + fullpath, cb); // TODO - fix to read proper branch
+    gettext(self.apiContent + 'files/auto' + fullpath, cb);
   }
 
   // note: fsbase.writefile takes filepath instead of fullpath
