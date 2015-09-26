@@ -1,6 +1,6 @@
 {
   "name": "pub-src-dropbox",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Dropbox source for pub-server and pub-generator",
   "main": "pub-src-dropbox.js",
   "dependencies": {
