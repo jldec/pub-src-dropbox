@@ -6,8 +6,8 @@
   "dependencies": {
     "debug": "^2.1.3",
     "mime-types": "^2.1.2",
-    "pub-src-fs": "^1.4.1",
-    "pub-util": "^1.5.1",
+    "pub-src-fs": "^1.4.2",
+    "pub-util": "^2.0.0",
     "superagent": "^1.2.0"
   },
   "devDependencies": {
