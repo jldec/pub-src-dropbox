@@ -18,7 +18,7 @@
 var superagent = require('superagent');
 var u = require('pub-util');
 var path = require('path');
-var mime = require('mime-types');
+// var mime = require('mime-types');
 var streamStr = require('stream-to-string');
 
 module.exports = function dropboxBase(opts) {
@@ -42,7 +42,7 @@ module.exports = function dropboxBase(opts) {
   self.apiContent = self.apiContent || 'https://content.dropboxapi.com/2/';
   self.apiNotify  = self.apiNotify  || 'https://notify.dropboxapi.com/2/';
 
-  self.isfile     = path.extname    // TODO: use API for this
+  self.isfile     = path.extname;    // TODO: use API for this
 
   self.readdir    = readdir;
   self.readfile   = readfile;
@@ -71,9 +71,9 @@ module.exports = function dropboxBase(opts) {
     if (data) { rq.send(data); }
 
     rq.end(function(err, resp) {
-      var err = (resp && resp.error) || err;
+      err = (resp && resp.error) || err;
       if (err) return cb(err);
-      if (type === 'binary') return streamStr(resp, cb); // todo - support propery binary encoding
+      if (type === 'binary') return streamStr(resp, cb); // TODO - support propery binary encoding
       if (type === 'txt') return cb(null, resp.text);
       if (type === 'json' && resp.header['content-type'] !== 'application/json') {
         try { return cb(null, JSON.parse(resp.text)); }

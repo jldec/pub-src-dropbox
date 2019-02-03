@@ -6,8 +6,8 @@
 
 var test = require('tape');
 
-var stored   = 'file some -->  ⌘ <---'
-var overwrite = ' - ⌘ - ⌘ - ';
+var stored   = 'file some -->  ⌘ <---';
+// var overwrite = ' - ⌘ - ⌘ - ';
 
 var expected =
 [ { path: '/-foo.txt', text: 'file some -->  ⌘ <---' },
@@ -28,9 +28,9 @@ var expected =
 test('test put, validate, and restore', function(t) {
 
   var source = require('..')(
-  { path: '/test/test-put',
-    glob: '**/*.txt',
-    writable: true }
+    { path: '/test/test-put',
+      glob: '**/*.txt',
+      writable: true }
   );
 
   source.put(expected, 'pub-src-dropbox test-put1', function(err) {
@@ -46,7 +46,7 @@ test('test put, validate, and restore', function(t) {
           t.same(files, expected);
           source.clear(function(err) {
             t.end(err);
-          })
+          });
         });
       });
     });

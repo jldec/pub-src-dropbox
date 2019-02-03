@@ -1,6 +1,6 @@
 {
   "name": "pub-src-dropbox",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Dropbox source for pub-server and pub-generator",
   "main": "pub-src-dropbox.js",
   "dependencies": {
@@ -13,10 +13,12 @@
     "superagent": "^4.1.0"
   },
   "devDependencies": {
+    "eslint": "^5.13.0",
     "tape": "^4.9.2"
   },
   "scripts": {
-    "test": "tape test/test-*.js"
+    "test": "tape test/test-*.js",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",

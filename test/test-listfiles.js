@@ -4,11 +4,9 @@
  *
 **/
 
-var test = require('tape')
+var test = require('tape');
 
-var u = require('pub-util');
-
-test("listfiles", function(t){
+test('listfiles', function(t){
 
   var source = require('..')(
     { path: '/test/tree',
