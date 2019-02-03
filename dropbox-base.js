@@ -1,6 +1,10 @@
 /*
  * dropbox-base.js
  *
+ * NOTE: this was migrated to dropbox v2 api but not fully tested
+ * see https://www.dropbox.com/developers/reference/migration-guide
+ * only supports text files for now because of dependence on stream-to-string
+ *
  * base dropbox reader/writer
  * exports: isfile, readdir, readfile, and writefiles
  * works in conjunction with fs-base to provide full pub-src get and put
@@ -15,6 +19,7 @@ var superagent = require('superagent');
 var u = require('pub-util');
 var path = require('path');
 var mime = require('mime-types');
+var streamStr = require('stream-to-string');
 
 module.exports = function dropboxBase(opts) {
 
@@ -33,9 +38,9 @@ module.exports = function dropboxBase(opts) {
   self.path = self.path || '/';
   self.concurrency = self.concurrency || 2;
 
-  self.api        = self.api        || 'https://api.dropbox.com/1/';
-  self.apiContent = self.apiContent || 'https://api-content.dropbox.com/1/';
-  self.apiNotify  = self.apiNotify  || 'https://api-notify.dropbox.com/1/';
+  self.api        = self.api        || 'https://api.dropboxapi.com/2/';
+  self.apiContent = self.apiContent || 'https://content.dropboxapi.com/2/';
+  self.apiNotify  = self.apiNotify  || 'https://notify.dropboxapi.com/2/';
 
   self.isfile     = path.extname    // TODO: use API for this
 
@@ -48,13 +53,17 @@ module.exports = function dropboxBase(opts) {
 
   //--//--//--//--//--//--//--//--//--//--//--//--//
 
-  function makerequest(method, url, data, type, cb) {
+  function makerequest(method, url, params, data, type, cb) {
     var rq = superagent(method, url);
 
     rq.set('Authorization', 'Bearer ' + self.accessToken);
 
-    if('PUT' === method) {
-      rq.set('Content-Type', mime.lookup(url) || 'application/octet-stream');
+    if (params && params.mode === 'overwrite') {
+      rq.set('Content-Type', 'application/octet-stream');
+    }
+
+    if (params) {
+      rq.set('Dropbox-API-Arg', JSON.stringify(params));
     }
 
     if (self.timeout)  { rq.timeout(self.timeout); }
@@ -62,8 +71,9 @@ module.exports = function dropboxBase(opts) {
     if (data) { rq.send(data); }
 
     rq.end(function(err, resp) {
-      var err = resp.error || err;
+      var err = (resp && resp.error) || err;
       if (err) return cb(err);
+      if (type === 'binary') return streamStr(resp, cb); // todo - support propery binary encoding
       if (type === 'txt') return cb(null, resp.text);
       if (type === 'json' && resp.header['content-type'] !== 'application/json') {
         try { return cb(null, JSON.parse(resp.text)); }
@@ -73,19 +83,16 @@ module.exports = function dropboxBase(opts) {
     });
   }
 
-  function get(url, cb)       { makerequest('GET',   url, null, 'json', cb); }
-  function gettext(url, cb)   { makerequest('GET',   url, null, 'txt',  cb); }
-  function put(url, data, cb) { makerequest('PUT',   url, data, 'json', cb); }
-  function post(url, data, cb){ makerequest('POST',  url, data, 'json', cb); }
+  function post(url, params, data, type, cb){ makerequest('POST', url, params, data, type, cb); }
 
   // matches fs.readdir()
   function readdir(fullpath, cb) {
-    get(self.api + 'metadata/auto' + fullpath, function(err, data) {
+    post(self.api + 'files/list_folder', null, { path:fullpath }, 'json', function(err, data) {
       if (err) return cb(err);
-      return cb(null, u.map(data.contents, function(entry) {
+      return cb(null, u.map(data.entries, function(entry) {
         return {
-          name:path.basename(entry.path),
-          type:(entry.is_dir ? 'dir' : 'file'),
+          name:entry.name,
+          type:(entry['.tag'] === 'folder' ? 'dir' : 'file'),
           hash:entry.rev };
       }));
     });
@@ -94,16 +101,16 @@ module.exports = function dropboxBase(opts) {
   // matches fs.readfile()
   function readfile(fullpath, options, cb) {
     if (2 === arguments.length) { cb = options; }
-    gettext(self.apiContent + 'files/auto' + fullpath, cb);
+    post(self.apiContent + 'files/download', { path:fullpath }, null, 'binary', cb);
   }
 
   // note: fsbase.writefile takes filepath instead of fullpath
   function writefile(filepath, data, cb) {
     var fullpath = u.join(self.path, filepath);
-    put(self.apiContent + 'files_put/auto' + fullpath, data, cb);
+    post(self.apiContent + 'files/upload', { path:fullpath, mode:'overwrite' }, data, 'json', cb);
   }
 
   function clear(cb) {
-    post(self.api + 'fileops/delete?root=auto&path=' + u.uqt(self.path), {}, cb);
+    post(self.api + 'files/delete_v2', null, { path:self.path }, 'json', cb);
   }
 };

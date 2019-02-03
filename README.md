@@ -4,7 +4,7 @@ dropbox source for pub-server and pub-generator
 
 * provides `get()` and `put()` for bulk reads and writes
 * works in conjunction with `pub-src-fs/fs-base`
-* assumes that all files are utf-8 text
+* assumes that all files are utf-8 text (does NOT currently handle binary files)
 * globs and descends directories
 
 ## src(options)
@@ -63,7 +63,8 @@ source.put(
 ```
 
 ### configuring access to the pub-server folder on dropbox
-To configure access  the pub-server folder on dropbox, set the following variable in your environment
+To configure access to the pub-server folder on dropbox, set the following variable in your environment
+(this is requird for running tests)
 
 ```sh
 export DBAC={access code}
