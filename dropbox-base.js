@@ -17,8 +17,7 @@
 
 var superagent = require('superagent');
 var u = require('pub-util');
-var path = require('path');
-// var mime = require('mime-types');
+
 var streamStr = require('stream-to-string');
 
 module.exports = function dropboxBase(opts) {
@@ -42,7 +41,7 @@ module.exports = function dropboxBase(opts) {
   self.apiContent = self.apiContent || 'https://content.dropboxapi.com/2/';
   self.apiNotify  = self.apiNotify  || 'https://notify.dropboxapi.com/2/';
 
-  self.isfile     = path.extname;    // TODO: use API for this
+  self.isfile     = require('path').extname; // TODO: use API for this
 
   self.readdir    = readdir;
   self.readfile   = readfile;
