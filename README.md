@@ -1,5 +1,5 @@
 # pub-src-dropbox
-[![Build Status](https://travis-ci.org/jldec/pub-src-dropbox.svg?branch=master)](https://travis-ci.org/jldec/pub-src-dropbox)
+![CI](https://github.com/jldec/pub-src-dropbox/workflows/CI/badge.svg)
 
 dropbox source for pub-server and pub-generator
 
