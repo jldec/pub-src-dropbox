@@ -1,33 +1,32 @@
 {
   "name": "pub-src-dropbox",
-  "version": "2.0.5",
+  "version": "2.0.7",
   "description": "Dropbox source for pub-server and pub-generator",
   "main": "pub-src-dropbox.js",
   "dependencies": {
-    "asyncbuilder": "^1.0.6",
+    "asyncbuilder": "^1.0.7",
     "debug": "^4.1.1",
-    "mime-types": "^2.1.24",
-    "pub-src-fs": "^2.0.8",
-    "pub-util": "^3.0.8",
+    "mime-types": "^2.1.26",
+    "pub-src-fs": "^2.0.9",
+    "pub-util": "^3.0.9",
     "stream-to-string": "^1.2.0",
-    "superagent": "^5.1.0"
+    "superagent": "^5.2.2"
   },
   "devDependencies": {
-    "eslint": "^6.0.1",
-    "tape": "^4.11.0"
+    "eslint": "^6.8.0",
+    "tape": "^4.13.0"
   },
   "files": [
     "pub-src-dropbox.js",
     "dropbox-base.js"
   ],
   "scripts": {
-    "test": "tape test/test-*.js",
-    "lint": "eslint ."
+    "test": "eslint . && tape test/*.js"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/jldec/pub-src-dropbox.git"
   },
-  "author": "jurgen leschner",
+  "author": "Jürgen Leschner",
   "license": "MIT"
 }
