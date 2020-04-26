@@ -35,7 +35,7 @@ module.exports = function dropboxBase(opts) {
   if (!self.accessToken) throw new Error('no dropbox accessToken in env.DBAC');
 
   self.path = self.path || '/';
-  self.concurrency = self.concurrency || 2;
+  self.concurrency = self.concurrency || 1;
 
   self.api        = self.api        || 'https://api.dropboxapi.com/2/';
   self.apiContent = self.apiContent || 'https://content.dropboxapi.com/2/';
