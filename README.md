@@ -1,5 +1,5 @@
 # pub-src-dropbox
-![CI](https://github.com/jldec/pub-src-dropbox/workflows/CI/badge.svg)
+[![CI](https://github.com/jldec/pub-src-dropbox/workflows/CI/badge.svg)](https://github.com/jldec/pub-src-dropbox/actions)
 
 dropbox source for pub-server and pub-generator
 

@@ -1,19 +1,19 @@
 {
   "name": "pub-src-dropbox",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "Dropbox source for pub-server and pub-generator",
   "main": "pub-src-dropbox.js",
   "dependencies": {
-    "asyncbuilder": "^1.0.8",
+    "asyncbuilder": "^1.0.9",
     "debug": "^4.1.1",
     "mime-types": "^2.1.27",
-    "pub-src-fs": "^2.1.0",
-    "pub-util": "^3.1.0",
+    "pub-src-fs": "^2.1.1",
+    "pub-util": "^3.1.1",
     "stream-to-string": "^1.2.0",
-    "superagent": "^5.2.2"
+    "superagent": "^5.3.1"
   },
   "devDependencies": {
-    "eslint": "^7.1.0",
+    "eslint": "^7.5.0",
     "tape": "^5.0.1"
   },
   "files": [
