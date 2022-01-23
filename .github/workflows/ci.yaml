@@ -1,11 +1,13 @@
 name: CI
-on: [push]
+on:
+  push:
+    branches: [ main ]
 jobs:
   test:
     strategy:
       max-parallel: 1
       matrix:
-        node: [10, 12, 14]
+        node: [12, 14, 16, 17]
         os:
         - ubuntu-latest
         - macos-latest
